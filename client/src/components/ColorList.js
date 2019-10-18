@@ -6,7 +6,7 @@ const initialColor = {
   code: { hex: "" }
 };
 
-const ColorList = ({ colors, updateColors, deleteColor }) => {
+const ColorList = ({ colors, updateColors, deleteColor, props }) => {
   console.log(colors);
   const [editing, setEditing] = useState(false);
   const [colorToEdit, setColorToEdit] = useState(initialColor);
@@ -36,6 +36,7 @@ const ColorList = ({ colors, updateColors, deleteColor }) => {
     .then(res => console.log(res))
     .catch(err => console.log(err))
   }
+
 
 
   return (
