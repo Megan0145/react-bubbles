@@ -21,7 +21,7 @@ const ColorList = ({ colors, updateColors }) => {
     e.preventDefault();
     withAuth()
     .post('http://localhost:5000/api/colors', {id: newColor.id, color: newColor.color, code: newColor.code})
-    .then(res => {console.log(res)})
+    .then(res => {updateColors(res.data)})
     .catch(err => {console.log(err)})
   }
 
@@ -38,7 +38,7 @@ const ColorList = ({ colors, updateColors }) => {
           return res.data;
         } return color;
       }))
-      setEditing(false)
+      setEditing(false);
     })
     .catch(err => console.log(err))
   }
@@ -60,7 +60,7 @@ const ColorList = ({ colors, updateColors }) => {
       <p>colors</p>
       <ul>
         {colors.map(color => (
-          <li key={color.color} onClick={() => editColor(color)}>
+          <li key={color.id} onClick={() => editColor(color)}>
             <span>
               <span className="delete" onClick={() => deleteColor(color)}>
                 x
@@ -108,8 +108,8 @@ const ColorList = ({ colors, updateColors }) => {
       {/* stretch - build another form here to add a color */}
       <form>
         <h1>Add Color</h1>
-        <input  placeholder='Color' onChange={e => setNewColor({color: e.target.value, ...newColor})}/>
-        <input  placeholder='Hex' onChange={e => setNewColor({code: { hex: e.target.value }, ...newColor})}/>
+        <input placeholder='Color' onChange={e => setNewColor({...newColor, color: e.target.value})} value={newColor.color}/>
+        <input placeholder='Hex' onChange={e => setNewColor({...newColor, code: { hex: e.target.value}})} value={newColor.code.hex}/>
         <button onClick={addColor}>Add Color</button>
       </form>
       </div>
