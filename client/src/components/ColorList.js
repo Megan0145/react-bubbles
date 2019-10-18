@@ -14,6 +14,7 @@ const ColorList = ({ colors, updateColors, deleteColor }) => {
   const editColor = color => {
     setEditing(true);
     setColorToEdit(color);
+    console.log(colorToEdit)
   };
 
   const saveEdit = e => {
@@ -21,7 +22,10 @@ const ColorList = ({ colors, updateColors, deleteColor }) => {
     // Make a put request to save your updated color
     // think about where will you get the id from...
     // where is is saved right now?
-    console.log(colorToEdit)
+    withAuth()
+    .put(`http://localhost:5000/api/colors/${colorToEdit.id}`, {id: colorToEdit.id, color: colorToEdit.color, code: colorToEdit.code})
+    .then(res => console.log(res))
+    .catch(err => console.log(err))
   };
 
 
