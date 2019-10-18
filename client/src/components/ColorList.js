@@ -14,14 +14,16 @@ const ColorList = ({ colors, updateColors }) => {
   const editColor = color => {
     setEditing(true);
     setColorToEdit(color);
-    console.log(colorToEdit)
   };
 
   const addColor = (e) => {
     e.preventDefault();
     withAuth()
     .post('http://localhost:5000/api/colors', {id: newColor.id, color: newColor.color, code: newColor.code})
-    .then(res => {updateColors(res.data)})
+    .then(res => {
+      updateColors(res.data);
+      setNewColor(initialColor);
+    })
     .catch(err => {console.log(err)})
   }
 
@@ -50,7 +52,6 @@ const ColorList = ({ colors, updateColors }) => {
     .delete(`http://localhost:5000/api/colors/${color.id}`)
     .then(res =>{
       updateColors(colors.filter(c => `${c.id}` !== `${res.data}`))
-      console.log(res)
     })
     .catch(err => console.log(err))
   };
