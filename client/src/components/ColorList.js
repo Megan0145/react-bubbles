@@ -38,6 +38,7 @@ const ColorList = ({ colors, updateColors }) => {
           return res.data;
         } return color;
       }))
+      setEditing(false)
     })
     .catch(err => console.log(err))
   }
