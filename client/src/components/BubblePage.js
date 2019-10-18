@@ -20,13 +20,6 @@ const BubblePage = (props) => {
     .then(res => setColorList(res.data))
     .catch(err => console.log(err))
   }
-  const deleteColor = color => {
-    // make a delete request to delete this color
-    withAuth()
-    .delete(`http://localhost:5000/api/colors/${color.id}`)
-    .then(res =>{})
-    .catch(err => console.log(err))
-  };
   
   const logout = () => {
     localStorage.removeItem('token');
@@ -35,7 +28,7 @@ const BubblePage = (props) => {
   return (
     <>
     <button onClick={logout}>Log Out</button>
-      <ColorList colors={colorList} updateColors={setColorList} deleteColor={deleteColor}/>
+      <ColorList colors={colorList} updateColors={setColorList} />
       <Bubbles colors={colorList} />
     </>
   );

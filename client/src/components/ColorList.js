@@ -6,8 +6,7 @@ const initialColor = {
   code: { hex: "" }
 };
 
-const ColorList = ({ colors, updateColors, deleteColor, props }) => {
-  console.log(colors);
+const ColorList = ({ colors, updateColors }) => {
   const [editing, setEditing] = useState(false);
   const [colorToEdit, setColorToEdit] = useState(initialColor);
   const [newColor, setNewColor] = useState(initialColor);
@@ -37,7 +36,16 @@ const ColorList = ({ colors, updateColors, deleteColor, props }) => {
     .catch(err => console.log(err))
   }
 
-
+  const deleteColor = color => {
+    // make a delete request to delete this color
+    withAuth()
+    .delete(`http://localhost:5000/api/colors/${color.id}`)
+    .then(res =>{
+      updateColors(colors.filter(c => `${c.id}` !== `${res.data}`))
+      console.log(res)
+    })
+    .catch(err => console.log(err))
+  };
 
   return (
     <div className="colors-wrap">
