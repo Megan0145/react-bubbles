@@ -11,7 +11,7 @@ const BubblePage = () => {
 
   useEffect(() => {
     getColors();
-  }, [])
+  }, [colorList])
 
   const getColors = () => {
     withAuth()
@@ -19,10 +19,21 @@ const BubblePage = () => {
     .then(res => setColorList(res.data))
     .catch(err => console.log(err))
   }
+  const deleteColor = color => {
+    // make a delete request to delete this color
+    withAuth()
+    .delete(`http://localhost:5000/api/colors/${color.id}`)
+    .then(res => {
+      console.log(res.data)
+      console.log(colorList)
+    })
+    .catch(err => console.log(err))
+  };
+  
 
   return (
     <>
-      <ColorList colors={colorList} updateColors={setColorList} />
+      <ColorList colors={colorList} updateColors={setColorList} deleteColor={deleteColor}/>
       <Bubbles colors={colorList} />
     </>
   );
