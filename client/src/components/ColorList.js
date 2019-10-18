@@ -32,9 +32,16 @@ const ColorList = ({ colors, updateColors }) => {
     // where is is saved right now?
     withAuth()
     .put(`http://localhost:5000/api/colors/${colorToEdit.id}`, {id: colorToEdit.id, color: colorToEdit.color, code: colorToEdit.code})
-    .then(res => console.log(res))
+    .then(res => {
+      updateColors(colors.map(color => {
+        if(color.id === res.data.id){
+          return res.data;
+        } return color;
+      }))
+    })
     .catch(err => console.log(err))
   }
+
 
   const deleteColor = color => {
     // make a delete request to delete this color
