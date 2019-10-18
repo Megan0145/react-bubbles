@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import withAuth from '../axios';
-import { Redirect } from 'react-router-dom'; 
 
 import Bubbles from "./Bubbles";
 import ColorList from "./ColorList";

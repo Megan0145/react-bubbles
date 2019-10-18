@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { BrowserRouter as Router, Route, withRouter, Redirect } from "react-router-dom";
+import React from "react";
+import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
 
 import Login from "./components/Login";
 import BubblePage from './components/BubblePage';
