@@ -1,31 +1,43 @@
 import React, { useState } from "react";
-import axios from "axios";
+import withAuth from "../axios";
 
 const initialColor = {
   color: "",
   code: { hex: "" }
 };
 
-const ColorList = ({ colors, updateColors }) => {
+const ColorList = ({ colors, updateColors, deleteColor, props }) => {
   console.log(colors);
   const [editing, setEditing] = useState(false);
   const [colorToEdit, setColorToEdit] = useState(initialColor);
+  const [newColor, setNewColor] = useState(initialColor);
 
   const editColor = color => {
     setEditing(true);
     setColorToEdit(color);
+    console.log(colorToEdit)
   };
+
+  const addColor = (e) => {
+    e.preventDefault();
+    withAuth()
+    .post('http://localhost:5000/api/colors', {id: newColor.id, color: newColor.color, code: newColor.code})
+    .then(res => {console.log(res)})
+    .catch(err => {console.log(err)})
+  }
 
   const saveEdit = e => {
     e.preventDefault();
     // Make a put request to save your updated color
     // think about where will you get the id from...
     // where is is saved right now?
-  };
+    withAuth()
+    .put(`http://localhost:5000/api/colors/${colorToEdit.id}`, {id: colorToEdit.id, color: colorToEdit.color, code: colorToEdit.code})
+    .then(res => console.log(res))
+    .catch(err => console.log(err))
+  }
 
-  const deleteColor = color => {
-    // make a delete request to delete this color
-  };
+
 
   return (
     <div className="colors-wrap">
@@ -76,8 +88,15 @@ const ColorList = ({ colors, updateColors }) => {
           </div>
         </form>
       )}
-      <div className="spacer" />
+      <div className="spacer">
       {/* stretch - build another form here to add a color */}
+      <form>
+        <h1>Add Color</h1>
+        <input  placeholder='Color' onChange={e => setNewColor({color: e.target.value, ...newColor})}/>
+        <input  placeholder='Hex' onChange={e => setNewColor({code: { hex: e.target.value }, ...newColor})}/>
+        <button onClick={addColor}>Add Color</button>
+      </form>
+      </div>
     </div>
   );
 };
